@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  db:
+    build:
+      context: todo-back
+      dockerfile: Dockerfile.db 
+    ports:
+      - "5432:5432"
+    environment:
+      - "POSTGRES_USER=docker"  
+      - "POSTGRES_PASSWORD=docker"  
+      - "POSTGRES_DB=tasks"  
+  backend:
+    build:
+      context: todo-back
+      dockerfile: Dockerfile.back 
+    ports:
+      - "3000:3000"
+    environment:
+      - "DB_HOST=db"  
+      - "DB_USERNAME=docker"  
+      - "DB_PASSWORD=docker"  
+    depends_on:
+      - db
+  frontend:
+    build:
+      context: todo-front
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+
+

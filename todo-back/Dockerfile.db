@@ -1,0 +1,7 @@
+FROM postgres:16-alpine 
+ENV POSTGRES_USER docker 
+ENV POSTGRES_PASSWORD docker 
+ENV POSTGRES_DB tasks 
+COPY docker/init-db.sh /docker-entrypoint-initdb.d/init-db.sh
+RUN chmod 777 /docker-entrypoint-initdb.d/init-db.sh
+
